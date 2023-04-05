@@ -1,7 +1,6 @@
 # IngestIQ
 
 
-                                                            Metadata-Driven Data Ingestion Process
 
 Problem Statement:-
 Write a metadata-driven data ingestion process to source data from a system and load into a target system. This should also work on any cloud (AWS).
