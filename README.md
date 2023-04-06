@@ -2,15 +2,14 @@
 
 
 
-### Problem Statement
+## Problem Statement
 
 Write a metadata-driven data ingestion process to source data from a system and load into a target system. This should also work on any cloud (AWS).
 
 Source and target data formats could be any of the below:
 
-• File formats: csv, parquet
-
-• RDBMS: table, SQL join query (PostgreSQL or mySQL or any open-source DB)
++ File formats: csv, parquet
++ RDBMS: table, SQL join query (PostgreSQL or mySQL or any open-source DB)
 
 
 ## Introduction
