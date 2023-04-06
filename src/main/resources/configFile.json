@@ -3,17 +3,16 @@
     {
         "type": "source",
         "connectionType": "fileSystem",
-        "filePath": "D:\\resources2\\csv_files\\acc_16.csv",
-        "fileType": "csv"
+        "filePath": "D:\\resources2\\yellow_tripdata_2022-11.parquet",
+        "fileType": "parquet"
 
     },
     {
         "type": "target",
-        "connectionType": "AwsPostgreSQL",
-        "userName": "postgres",
-        "password": "ShubhamParate",
-        "dataBaseName": "demo6",
-        "schemaName": "data",
-        "tableName": "emp"
+        "connectionType": "fileSystem",
+        "filePath": "D:\\resources\\newout3",
+        "fileType": "csv"
+
     }
+
 ]

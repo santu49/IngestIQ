@@ -18,7 +18,7 @@ class loadData {
     //    srcFileData.show()
     srcFileData.coalesce(1).write.format(tar_file_type).option("header","true").save(tar_file_path);
 
-    return "Successfully load data"
+    return "Successfully loaded data"
 
   }
 
@@ -42,7 +42,7 @@ class loadData {
       .mode(SaveMode.Append)
       .jdbc(url, s"$tableUrl", pgConnectionType)
 
-    return "Successfully load data";
+    return "Successfully loaded data";
   }
 
 
@@ -77,7 +77,7 @@ class loadData {
       .mode(SaveMode.Overwrite)
       .jdbc(url1, s"$tableUrl", pgConnectionType)
 
-    return "Successfully load data from local file to AWS PostgreSql";
+    return "Successfully loaded data from local file to AWS PostgreSql";
   }
 
 }

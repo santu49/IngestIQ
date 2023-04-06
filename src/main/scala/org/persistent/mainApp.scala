@@ -26,7 +26,7 @@ object mainApp {
     var configFileData = spark.emptyDataFrame;
     if (check == "Success") {
       configFileData = connectionOBJ.readConfigFile(config_Json_file_path, file_type);
-      //      configFileData.show();
+//      configFileData.show();
       val srcConnectionData = connectionOBJ.getSrcConnections(configFileData);
       //      srcConnectionData.show()
       val tarConnectionData = connectionOBJ.getTarConnections(configFileData);
@@ -43,7 +43,7 @@ object mainApp {
       //for source
       if (srcConnectionTypeData(0) == "fileSystem") {
         srcFileData = readDataOBJ.getDataFromFile(configFileData);
-        //                  srcFileData.show(10);
+//        srcFileData.show(10);
         //          write here
       } else if (srcConnectionTypeData(0) == "postgreSQL") {
         srcFileData = readDataOBJ.getDataFromPostGre(configFileData);
