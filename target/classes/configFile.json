@@ -10,7 +10,7 @@
     {
         "type": "target",
         "connectionType": "fileSystem",
-        "filePath": "D:\\resources\\newout3",
+        "filePath": "D:\\resources\\newout6",
         "fileType": "csv"
 
     }
