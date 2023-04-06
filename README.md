@@ -2,20 +2,18 @@
 
 
 
-## Problem Statement:-
-Write a metadata-driven data ingestion process to source data from a system and load into a target system. This should also work on any cloud (AWS).
+### Problem Statement
 
-Source and target data formats could be any of the below:
+	Write a metadata-driven data ingestion process to source data from a system and load into a target system. This should also work on any cloud (AWS).
 
-•	File formats: csv, parquet
+	Source and target data formats could be any of the below:
 
-•	RDBMS: table, SQL join query (PostgreSQL or mySQL or any open-source DB)
+		• File formats: csv, parquet
+
+		• RDBMS: table, SQL join query (PostgreSQL or mySQL or any open-source DB)
 
 
-
-
-## Introduction:-
-
+## Introduction
 
 Data ingestion is the process of collecting and importing data from various sources into a storage or processing system. It is a crucial first step in any data pipeline or data integration project, as it determines the quality, completeness, and accuracy of the data that will be used in subsequent processing and analysis.&nbsp;
  
@@ -25,12 +23,14 @@ Effective data ingestion requires careful planning and execution, as well as app
 
 Data ingestion is a critical process in any data-driven organization as it enables organizations to collect and analyze large amounts of data from various sources, which can be used to make data-driven decisions and gain insights into customer behavior, product performance, and other important business metrics.&nbsp;
 	
-## Workflow:-
+	
+## Workflow
+
 ![image](https://user-images.githubusercontent.com/129846515/229763502-106e653a-9d00-4326-b059-b0a2951f244d.png)
 
  
 
-## Technologies used:-
+## Technologies used
 
 +	Scala
 
@@ -41,7 +41,8 @@ Data ingestion is a critical process in any data-driven organization as it enabl
 +	Postgresql
 
 
-## Features :-
+## Features
+
 +	**Data Format Support:** The ability to handle different data formats such as CSV, JSON, and Paraquet formats.
 
 +	**Scalability:** The ability to handle large volumes of data and scale as the data grows.
@@ -52,7 +53,9 @@ Data ingestion is a critical process in any data-driven organization as it enabl
 
 +	**Alerting:** The ability to send when errors or issues occur during the data ingestion process.
 
-## Use Cases :-
+
+
+## Use Cases
 
 + **Data Warehousing:**  Our application can be used for data warehousing and ETL (Extract, Transform, Load) processes. This can help businesses to efficiently manage and analyze large amounts of data from various sources.
 	
@@ -64,28 +67,5 @@ Data ingestion is a critical process in any data-driven organization as it enabl
 + **Predictive Analytics:** Our application can be used for predictive analytics, which involves analyzing historical data to make predictions about future events or trends.
 	
    * We can use our application for the predictive analytics. Suppose consider McDonald’s need to take the decision to increase the price of the product in the next year. For that first they need to analyze the historical data. Actually, the data is in different formats, so by using our application we can convert that data into the structured formats. By using that data we can analyze and predict the price of the product for the next year.
-
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
