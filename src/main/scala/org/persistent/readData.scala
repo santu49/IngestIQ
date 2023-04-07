@@ -12,7 +12,7 @@ class readData {
     import spark.implicits._
     val src_file_path = df.select("filePath").distinct().map(f => f.getString(0)).collect().toList(0);
     val src_file_type = df.select("fileType").distinct().map(f => f.getString(0)).collect().toList(0);
-    val src_file_data = spark.read.format(src_file_type).option("header", "true").load(src_file_path);
+    val src_file_data = spark.read.format(src_file_type).option("header", "true").option("inferSchema", "true").load(src_file_path);
     return src_file_data;
   }
 
@@ -38,6 +38,7 @@ class readData {
       .option("user", s"$post_userName")
       .option("password", s"$post_password")
       .option("driver", "org.postgresql.Driver")
+      .option("inferSchema", "true")
       .load()
     //    src_ct_df.show(10);
     return src_ct_df;
@@ -66,6 +67,7 @@ class readData {
       .option("dbtable", s"$mysql_table_name")
       .option("user", s"$mysql_userName")
       .option("password", s"$mysql_password")
+      .option("inferSchema", "true")
       .load()
     return src_ct_df;
   }

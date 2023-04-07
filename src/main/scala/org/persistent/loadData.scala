@@ -2,8 +2,10 @@ package org.persistent
 
 import org.apache.spark.sql.{DataFrame, SaveMode}
 import org.persistent.mainApp.createSparkSession
+
 import java.sql.DriverManager
 import java.util.Properties
+import scala.io.StdIn.readLine
 
 class loadData {
 
@@ -104,13 +106,23 @@ class loadData {
     import spark.implicits._
     val tar_file_path = df.select("filePath").distinct().map(f => f.getString(0)).collect().toList(0)
     val tar_file_type = df.select("fileType").distinct().map(f => f.getString(0)).collect().toList(0)
-    //  val src_file_data = spark.read.format(src_file_type).option("header", "true").load(src_file_path)
+//      val src_file_data = spark.read.format(tar_file_type).option("header", "true").load(tar_file_path)
     //  srcFileData.show()
 
     println("What are you want to change: ")
     println("1. Changes in rows")
     println("2. Changes in column")
-    //    src_file_data.coalesce(1).write.format(tar_file_type).option("header", "true").save(tar_file_path)
+    val res=readLine
+    if(res=="1"){
+      println("Enter number of rows you want: ")
+      val rows = readLine();
+      val modifiedData=src_file_data.limit(rows.toInt)
+      modifiedData.show()
+    }else if(res=="2"){
+
+    }
+
+//        src_file_data.coalesce(1).write.format(tar_file_type).option("header", "true").option("inferSchema","true").save(tar_file_path)
 
     //    return "Successfully loaded Data"
     return "Hello from modified data"

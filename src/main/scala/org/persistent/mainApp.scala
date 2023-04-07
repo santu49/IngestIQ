@@ -52,9 +52,11 @@ object mainApp {
         //        print(tarConnectionFileType)
         if (srcConnectionFileType(0) == "csv" && tarConnectionFileType(0) == "csv") {
           srcFileData = readDataOBJ.getDataFromFile(configFileData)
+//          srcFileData.show(10)
           println("Do you want to load same data? (yes/no)")
           val res = readLine
           if (res == "No" || res == "no" || res == "NO") {
+//            srcFileData.show(10)
             val message = loadDataOBJ.modifiedData(configFileData, srcFileData)
             println(message)
 //            print("getting res")

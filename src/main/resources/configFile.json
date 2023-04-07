@@ -3,14 +3,14 @@
     {
         "type": "source",
         "connectionType": "fileSystem",
-        "filePath": "D:\\resources2\\yellow_tripdata_2022-11.parquet",
+        "filePath": "D:\\resources2\\csv_files\\acc_16.csv",
         "fileType": "csv"
 
     },
     {
         "type": "target",
         "connectionType": "fileSystem",
-        "filePath": "D:\\resources\\newout7",
+        "filePath": "D:\\resources\\newout9",
         "fileType": "csv"
 
     }
