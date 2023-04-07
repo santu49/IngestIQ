@@ -1,23 +1,21 @@
 package org.persistent
+
 import org.apache.spark.sql.{DataFrame, SaveMode}
 import org.persistent.mainApp.createSparkSession
-
 import java.sql.DriverManager
 import java.util.Properties
 
 class loadData {
 
-
-  def putDataInLocalFile(configFileData:DataFrame,srcFileData:DataFrame):String={
-    val spark = createSparkSession();
-    val df = configFileData.filter(configFileData("type") === "target").select("filePath", "fileType");
+  def putDataInLocalFile(configFileData: DataFrame, srcFileData: DataFrame): String = {
+    val spark = createSparkSession()
+    val df = configFileData.filter(configFileData("type") === "target").select("filePath", "fileType")
     import spark.implicits._
-    val tar_file_path = df.select("filePath").distinct().map(f => f.getString(0)).collect().toList(0);
-    val tar_file_type = df.select("fileType").distinct().map(f => f.getString(0)).collect().toList(0);
-    //    val src_file_data = spark.read.format(src_file_type).option("header", "true").load(src_file_path);
+    val tar_file_path = df.select("filePath").distinct().map(f => f.getString(0)).collect().toList(0)
+    val tar_file_type = df.select("fileType").distinct().map(f => f.getString(0)).collect().toList(0)
+    //    val src_file_data = spark.read.format(src_file_type).option("header", "true").load(src_file_path)
     //    srcFileData.show()
-    srcFileData.coalesce(1).write.format(tar_file_type).option("header","true").save(tar_file_path);
-
+    srcFileData.coalesce(1).write.format(tar_file_type).option("header", "true").save(tar_file_path)
     return "Successfully loaded data"
 
   }
@@ -25,82 +23,98 @@ class loadData {
 
   def putDataInPostgreSQL(configFileData: DataFrame, src_file_data: DataFrame): String = {
     val spark = createSparkSession();
-    val df = configFileData.filter(configFileData("type") === "target").select("userName", "password", "dataBaseName", "schemaName", "tableName");
+    val df = configFileData.filter(configFileData("type") === "target").select("userName", "password", "dataBaseName", "schemaName", "tableName")
     import spark.implicits._
-    val post_userName = df.select("userName").distinct().map(f => f.getString(0)).collect().toList(0);
-    val post_password = df.select("password").distinct().map(f => f.getString(0)).collect().toList(0);
-    val post_databaseName = df.select("dataBaseName").distinct().map(f => f.getString(0)).collect().toList(0);
-    val post_Schema_Name = df.select("schemaName").distinct().map(f => f.getString(0)).collect().toList(0);
-    val post_table_name = df.select("tableName").distinct().map(f => f.getString(0)).collect().toList(0);
-
-    val pgConnectionType = new Properties();
-    pgConnectionType.setProperty("user", s"$post_userName");
-    pgConnectionType.setProperty("password", s"$post_password");
+    val post_userName = df.select("userName").distinct().map(f => f.getString(0)).collect().toList(0)
+    val post_password = df.select("password").distinct().map(f => f.getString(0)).collect().toList(0)
+    val post_databaseName = df.select("dataBaseName").distinct().map(f => f.getString(0)).collect().toList(0)
+    val post_Schema_Name = df.select("schemaName").distinct().map(f => f.getString(0)).collect().toList(0)
+    val post_table_name = df.select("tableName").distinct().map(f => f.getString(0)).collect().toList(0)
+    val pgConnectionType = new Properties()
+    pgConnectionType.setProperty("user", s"$post_userName")
+    pgConnectionType.setProperty("password", s"$post_password")
     val tableUrl = s"\"$post_Schema_Name\".$post_table_name"
     val url = s"jdbc:postgresql://localhost:5432/$post_databaseName"
     src_file_data.write
       .mode(SaveMode.Append)
       .jdbc(url, s"$tableUrl", pgConnectionType)
 
-    return "Successfully loaded data";
+    return "Successfully loaded data"
   }
 
 
-
   def putDataInAWSPostgreSQL(configFileData: DataFrame, src_file_data: DataFrame): String = {
-    val spark = createSparkSession();
-
+    val spark = createSparkSession()
     val df = configFileData.filter(configFileData("type") === "target")
-      .select("userName", "password", "dataBaseName", "schemaName", "tableName");
+      .select("userName", "password", "dataBaseName", "schemaName", "tableName")
     import spark.implicits._
-    val post_userName = df.select("userName").distinct().map(f => f.getString(0)).collect().toList(0);
-    val post_password = df.select("password").distinct().map(f => f.getString(0)).collect().toList(0);
-    val post_databaseName = df.select("dataBaseName").distinct().map(f => f.getString(0)).collect().toList(0);
-    val post_Schema_Name = df.select("schemaName").distinct().map(f => f.getString(0)).collect().toList(0);
-    val post_table_name = df.select("tableName").distinct().map(f => f.getString(0)).collect().toList(0);
+    val post_userName = df.select("userName").distinct().map(f => f.getString(0)).collect().toList(0)
+    val post_password = df.select("password").distinct().map(f => f.getString(0)).collect().toList(0)
+    val post_databaseName = df.select("dataBaseName").distinct().map(f => f.getString(0)).collect().toList(0)
+    val post_Schema_Name = df.select("schemaName").distinct().map(f => f.getString(0)).collect().toList(0)
+    val post_table_name = df.select("tableName").distinct().map(f => f.getString(0)).collect().toList(0)
 
-    val pgConnectionType = new Properties();
-    pgConnectionType.setProperty("user", s"$post_userName");
-    pgConnectionType.setProperty("password", s"$post_password");
+    val pgConnectionType = new Properties()
+    pgConnectionType.setProperty("user", s"$post_userName")
+    pgConnectionType.setProperty("password", s"$post_password")
 
-    val url = "jdbc:postgresql://database-1.ckaqa1w4hirj.ap-south-1.rds.amazonaws.com:5432/";
-    val tableUrl = s"\"$post_Schema_Name\".$post_table_name";
-    val conn = DriverManager.getConnection(url, post_userName, post_password);
-    val statement = conn.createStatement();
+    val url = "jdbc:postgresql://database-1.ckaqa1w4hirj.ap-south-1.rds.amazonaws.com:5432/"
+    val tableUrl = s"\"$post_Schema_Name\".$post_table_name"
+    val conn = DriverManager.getConnection(url, post_userName, post_password)
+    val statement = conn.createStatement()
     statement.executeUpdate(s"CREATE DATABASE $post_databaseName")
     val url1 = s"jdbc:postgresql://database-1.ckaqa1w4hirj.ap-south-1.rds.amazonaws.com:5432/$post_databaseName"
     val conn1 = DriverManager.getConnection(url1, post_userName, post_password)
     val statement1 = conn1.createStatement()
-    statement1.executeUpdate(s"CREATE SCHEMA $post_Schema_Name");
+    statement1.executeUpdate(s"CREATE SCHEMA $post_Schema_Name")
     // write file to destination
     src_file_data.write
       .mode(SaveMode.Overwrite)
       .jdbc(url1, s"$tableUrl", pgConnectionType)
 
-    return "Successfully loaded data from local file to AWS PostgreSql";
+    return "Successfully loaded data from local file to AWS PostgreSql"
   }
 
 
   def putDataInMYSQL(configFileData: DataFrame, src_file_data: DataFrame): String = {
     val spark = createSparkSession();
-    val df = configFileData.filter(configFileData("type") === "target").select("userName", "password", "dataBaseName", "schemaName", "tableName");
+    val df = configFileData.filter(configFileData("type") === "target").select("userName", "password", "dataBaseName", "schemaName", "tableName")
     import spark.implicits._
-    val mysql_userName = df.select("userName").distinct().map(f => f.getString(0)).collect().toList(0);
-    val mysql_password = df.select("password").distinct().map(f => f.getString(0)).collect().toList(0);
-    val mysql_databaseName = df.select("dataBaseName").distinct().map(f => f.getString(0)).collect().toList(0);
-    val mysql_Schema_Name = df.select("schemaName").distinct().map(f => f.getString(0)).collect().toList(0);
-    val mysql_table_name = df.select("tableName").distinct().map(f => f.getString(0)).collect().toList(0);
+    val mysql_userName = df.select("userName").distinct().map(f => f.getString(0)).collect().toList(0)
+    val mysql_password = df.select("password").distinct().map(f => f.getString(0)).collect().toList(0)
+    val mysql_databaseName = df.select("dataBaseName").distinct().map(f => f.getString(0)).collect().toList(0)
+    val mysql_Schema_Name = df.select("schemaName").distinct().map(f => f.getString(0)).collect().toList(0)
+    val mysql_table_name = df.select("tableName").distinct().map(f => f.getString(0)).collect().toList(0)
 
-    val mySqlConnectionType = new Properties();
-    mySqlConnectionType.setProperty("user", s"$mysql_userName");
-    mySqlConnectionType.setProperty("password", s"$mysql_password");
+    val mySqlConnectionType = new Properties()
+    mySqlConnectionType.setProperty("user", s"$mysql_userName")
+    mySqlConnectionType.setProperty("password", s"$mysql_password")
     //val tableUrl = s"\"$mysql_Schema_Name\".$mysql_table_name"
     val url = s"jdbc:mysql://localhost:3306/$mysql_databaseName"
     src_file_data.write
       .mode(SaveMode.Append)
       .jdbc(url, s"$mysql_table_name", mySqlConnectionType)
 
-    return "Successfully load data";
+    return "Successfully loaded data"
+  }
+
+  def modifiedData(configFileData: DataFrame, src_file_data: DataFrame): String = {
+    val spark = createSparkSession();
+    val df = configFileData.filter(configFileData("type") === "target").select("filePath", "fileType")
+    import spark.implicits._
+    val tar_file_path = df.select("filePath").distinct().map(f => f.getString(0)).collect().toList(0)
+    val tar_file_type = df.select("fileType").distinct().map(f => f.getString(0)).collect().toList(0)
+    //  val src_file_data = spark.read.format(src_file_type).option("header", "true").load(src_file_path)
+    //  srcFileData.show()
+
+    println("What are you want to change: ")
+    println("1. Changes in rows")
+    println("2. Changes in column")
+    //    src_file_data.coalesce(1).write.format(tar_file_type).option("header", "true").save(tar_file_path)
+
+    //    return "Successfully loaded Data"
+    return "Hello from modified data"
+
   }
 
 }
