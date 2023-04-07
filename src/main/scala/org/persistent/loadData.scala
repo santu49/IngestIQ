@@ -1,5 +1,5 @@
 package org.persistent
-import org.apache.spark.sql.{DataFrame, SaveMode, SparkSession}
+import org.apache.spark.sql.{DataFrame, SaveMode}
 import org.persistent.mainApp.createSparkSession
 
 import java.sql.DriverManager
@@ -78,6 +78,28 @@ class loadData {
       .jdbc(url1, s"$tableUrl", pgConnectionType)
 
     return "Successfully loaded data from local file to AWS PostgreSql";
+  }
+
+  def putDataInMYSQL(configFileData: DataFrame, src_file_data: DataFrame): String = {
+    val spark = createSparkSession();
+    val df = configFileData.filter(configFileData("type") === "target").select("userName", "password", "dataBaseName", "schemaName", "tableName");
+    import spark.implicits._
+    val post_userName = df.select("userName").distinct().map(f => f.getString(0)).collect().toList(0);
+    val post_password = df.select("password").distinct().map(f => f.getString(0)).collect().toList(0);
+    val post_databaseName = df.select("dataBaseName").distinct().map(f => f.getString(0)).collect().toList(0);
+    val post_Schema_Name = df.select("schemaName").distinct().map(f => f.getString(0)).collect().toList(0);
+    val post_table_name = df.select("tableName").distinct().map(f => f.getString(0)).collect().toList(0);
+
+    val pgConnectionType = new Properties();
+    pgConnectionType.setProperty("user", s"$post_userName");
+    pgConnectionType.setProperty("password", s"$post_password");
+    //val tableUrl = s"\"$post_Schema_Name\".$post_table_name"
+    val url = s"jdbc:mysql://localhost:3306/$post_databaseName"
+    src_file_data.write
+      .mode(SaveMode.Append)
+      .jdbc(url, s"$post_table_name", pgConnectionType)
+
+    return "Successfully load data";
   }
 
 }

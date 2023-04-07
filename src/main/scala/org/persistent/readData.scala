@@ -1,6 +1,8 @@
 package org.persistent
-import org.apache.spark.sql.{DataFrame, SaveMode, SparkSession}
+import org.apache.spark.sql.DataFrame
 import org.persistent.mainApp.createSparkSession
+
+import java.util.Properties
 
 class readData {
 
@@ -41,6 +43,32 @@ class readData {
     return src_ct_df;
   }
 
+  def getDataFromMYSQL(configFileData: DataFrame): DataFrame = {
+    val spark = createSparkSession();
+    val df = configFileData.filter(configFileData("type") === "source").select("userName", "password", "dataBaseName", "schemaName", "tableName");
+    import spark.implicits._
+    val post_userName = df.select("userName").distinct().map(f => f.getString(0)).collect().toList(0);
+    val post_password = df.select("password").distinct().map(f => f.getString(0)).collect().toList(0);
+    val post_databaseName = df.select("dataBaseName").distinct().map(f => f.getString(0)).collect().toList(0);
+    val post_Schema_Name = df.select("schemaName").distinct().map(f => f.getString(0)).collect().toList(0);
+    val post_table_name = df.select("tableName").distinct().map(f => f.getString(0)).collect().toList(0);
+
+    val pgConnectionType = new Properties();
+    pgConnectionType.setProperty("user", s"$post_userName");
+    pgConnectionType.setProperty("password", s"$post_password");
+    //val tableUrl = s"\"$post_Schema_Name\".$post_table_name"
+    //val url = s"jdbc:mysql://localhost:3306/$post_databaseName"
+
+    val src_ct_df = spark.read
+      .format("jdbc")
+      .option("driver","com.mysql.cj.jdbc.Driver")
+      .option("url", s"jdbc:mysql://localhost:3306/$post_databaseName")
+      .option("dbtable", s"$post_table_name")
+      .option("user", s"$post_userName")
+      .option("password", s"$post_password")
+      .load()
+    return src_ct_df;
+  }
 
 
 }

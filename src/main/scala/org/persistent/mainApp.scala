@@ -73,6 +73,9 @@ object mainApp {
       } else if (srcConnectionTypeData(0) == "postgreSQL") {
         srcFileData = readDataOBJ.getDataFromPostGre(configFileData);
         //        srcFileData.show(10);
+      } else if (srcConnectionTypeData(0) == "mysql") {
+        srcFileData = getDataFromMYSQL(configFileData);
+        //        srcFileData.show(10);
       }
 
 
@@ -86,7 +89,9 @@ object mainApp {
       } else if (tarConnectionTypeData(0) == "AwsPostgreSQL") {
         val message = loadDataOBJ.putDataInAWSPostgreSQL(configFileData, srcFileData);
         println(message);
-
+      } else if(tarConnectionTypeData(0)=="mysql"){
+        val message = putDataInMYSQL(configFileData, srcFileData);
+        println(message);
       }
 
 
