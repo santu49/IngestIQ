@@ -1,6 +1,4 @@
 [
-
-
     {
         "type": "source",
         "connectionType": "postgreSQL",
@@ -13,9 +11,8 @@
     {
         "type": "target",
         "connectionType": "fileSystem",
-        "filePath": "D:\\resources\\newout11",
+        "filePath": "D:\\resources\\newout12",
         "fileType": "csv"
 
     }
-
 ]

@@ -43,19 +43,19 @@ object mainApp {
       var srcFileData = spark.emptyDataFrame
 
       //---------------------csv to csv----------------------
-      if (srcConnectionTypeData(0) == "fileSystem" && tarConnectionTypeData(0) == "fileSystem") {
+      if (srcConnectionTypeData(0).toLowerCase == "filesystem" && tarConnectionTypeData(0).toLowerCase == "filesystem") {
         val srcConnectionFileType = configFileData.filter(configFileData("type") === "source").select("fileType").distinct()
           .map(f => f.getString(0)).collect().toList
         //        print(srcConnectionFileType)
         val tarConnectionFileType = configFileData.filter(configFileData("type") === "target").select("fileType").distinct()
           .map(f => f.getString(0)).collect().toList
         //        print(tarConnectionFileType)
-        if (srcConnectionFileType(0) == "csv" && tarConnectionFileType(0) == "csv") {
+        if (srcConnectionFileType(0).toLowerCase == "csv" && tarConnectionFileType(0).toLowerCase == "csv") {
           srcFileData = readDataOBJ.getDataFromFile(configFileData)
 //          srcFileData.show(10)
           println("Do you want to load same data? (yes/no)")
           val res = readLine
-          if (res == "No" || res == "no" || res == "NO") {
+          if (res.toLowerCase == "no") {
 //            srcFileData.show(10)
             val message = loadDataOBJ.modifiedData(configFileData, srcFileData)
             println(message)
@@ -67,30 +67,30 @@ object mainApp {
 
       }
       // ----------------for source----------------------
-      if (srcConnectionTypeData(0) == "fileSystem") {
+      if (srcConnectionTypeData(0).toLowerCase == "filesystem") {
         srcFileData = readDataOBJ.getDataFromFile(configFileData);
         //        srcFileData.show(10);
         //          write here
-      } else if (srcConnectionTypeData(0) == "postgreSQL") {
+      } else if (srcConnectionTypeData(0).toLowerCase == "postgresql") {
         srcFileData = readDataOBJ.getDataFromPostGre(configFileData);
         //        srcFileData.show(10);
-      } else if (srcConnectionTypeData(0) == "mysql") {
+      } else if (srcConnectionTypeData(0).toLowerCase == "mysql") {
         srcFileData = readDataOBJ.getDataFromMYSQL(configFileData);
         //        srcFileData.show(10);
       }
 
 
       //----------------------- for target---------------------
-      if (tarConnectionTypeData(0) == "postgreSQL") {
+      if (tarConnectionTypeData(0).toLowerCase == "postgresql") {
         val message = loadDataOBJ.putDataInPostgreSQL(configFileData, srcFileData);
         println(message);
-      } else if (tarConnectionTypeData(0) == "fileSystem") {
+      } else if (tarConnectionTypeData(0).toLowerCase == "filesystem") {
         val message = loadDataOBJ.putDataInLocalFile(configFileData, srcFileData);
         println(message);
-      } else if (tarConnectionTypeData(0) == "AwsPostgreSQL") {
+      } else if (tarConnectionTypeData(0).toLowerCase == "awspostgresql") {
         val message = loadDataOBJ.putDataInAWSPostgreSQL(configFileData, srcFileData);
         println(message);
-      } else if (tarConnectionTypeData(0) == "mysql") {
+      } else if (tarConnectionTypeData(0).toLowerCase == "mysql") {
         val message = loadDataOBJ.putDataInMYSQL(configFileData, srcFileData);
         println(message);
       }
