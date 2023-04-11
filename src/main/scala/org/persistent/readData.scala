@@ -50,7 +50,7 @@ class readData {
     val mysql_userName = df.select("userName").distinct().map(f => f.getString(0)).collect().toList(0);
     val mysql_password = df.select("password").distinct().map(f => f.getString(0)).collect().toList(0);
     val mysql_databaseName = df.select("dataBaseName").distinct().map(f => f.getString(0)).collect().toList(0);
-    val mysql_Schema_Name = df.select("schemaName").distinct().map(f => f.getString(0)).collect().toList(0);
+    //val mysql_Schema_Name = df.select("schemaName").distinct().map(f => f.getString(0)).collect().toList(0);
     val mysql_table_name = df.select("tableName").distinct().map(f => f.getString(0)).collect().toList(0);
 
     val mySqlConnectionType = new Properties();
