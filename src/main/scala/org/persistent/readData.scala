@@ -38,7 +38,6 @@ class readData {
       .option("user", s"$post_userName")
       .option("password", s"$post_password")
       .option("driver", "org.postgresql.Driver")
-      .option("inferSchema", "true")
       .load()
     //    src_ct_df.show(10);
     return src_ct_df;
