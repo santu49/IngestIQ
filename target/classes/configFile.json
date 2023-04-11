@@ -1,17 +1,17 @@
 [
     {
         "type": "source",
-        "connectionType": "postgreSQL",
-        "userName": "postgres",
-        "password": "Postgres",
-        "dataBaseName": "demo",
-        "schemaName": "mySchema2",
-        "tableName": "abc"
+        "connectionType": "mysql",
+        "userName": "root",
+        "password": "Shubham@29",
+        "dataBaseName": "sakila",
+        "schemaName": "sakila",
+        "tableName": "student"
     },
     {
         "type": "target",
         "connectionType": "fileSystem",
-        "filePath": "D:\\resources\\newout12",
+        "filePath": "D:/Book7",
         "fileType": "csv"
 
     }
