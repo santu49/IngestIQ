@@ -1,17 +1,17 @@
 [
     {
         "type": "source",
-        "connectionType": "mysql",
-        "userName": "root",
-        "password": "Shubham@29",
-        "dataBaseName": "sakila",
-        "schemaName": "sakila",
-        "tableName": "student"
+
+        "connectionType": "fileSystem",
+        "filePath": "D:\\resources2\\csv_files\\acc_16.csv",
+        "fileType": "csv"
+
     },
     {
         "type": "target",
         "connectionType": "fileSystem",
-        "filePath": "D:/Book7",
+
+        "filePath": "D:\\resources\\newout13",
         "fileType": "csv"
 
     }
