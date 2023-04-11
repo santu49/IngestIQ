@@ -35,13 +35,73 @@ class loadData {
     val pgConnectionType = new Properties()
     pgConnectionType.setProperty("user", s"$post_userName")
     pgConnectionType.setProperty("password", s"$post_password")
-    val tableUrl = s"\"$post_Schema_Name\".$post_table_name"
-    val url = s"jdbc:postgresql://localhost:5432/$post_databaseName"
-    src_file_data.write
-      .mode(SaveMode.Append)
-      .jdbc(url, s"$tableUrl", pgConnectionType)
 
-    return "Successfully loaded data"
+    // Set up the database connection
+    val url = s"jdbc:postgresql://localhost:5432/"
+    val taleUrl = s"\"$post_Schema_Name\".$post_table_name"
+    val conn = DriverManager.getConnection(url, post_userName, post_password)
+
+    val dbName = s"$post_databaseName"
+    val dbExistsQuery = s"SELECT 1 FROM pg_database WHERE datname = '$dbName'"
+    val dbExists = conn.createStatement().executeQuery(dbExistsQuery).next()
+
+    val schemaName = s"$post_Schema_Name"
+    val schemaExistsQuery = s"SELECT 1 FROM pg_namespace WHERE nspname = '$schemaName'"
+    val schemaExists = conn.createStatement().executeQuery(schemaExistsQuery).next()
+
+    if(dbExists && schemaExists) {
+      val db_url = s"jdbc:postgresql://localhost:5432/$post_databaseName"
+      src_file_data.write
+        .mode(SaveMode.Overwrite)
+        .jdbc(db_url, s"$taleUrl", pgConnectionType)
+    } else if (!dbExists) {
+      println("YOUR DATABASE & SCHEMA DOESN'T EXISTS")
+      println("Do You Want to CREATE DATABASE & SCHEMA")
+      println("If YES type -> y else type -> x")
+      val create_Database_Schema=readLine()
+
+      if(create_Database_Schema == "y") {
+        val createDbQuery = s"CREATE DATABASE $dbName"
+        conn.createStatement().execute(createDbQuery)
+
+        val db_url = s"jdbc:postgresql://localhost:5432/$post_databaseName"
+        val db_conn = DriverManager.getConnection(db_url, post_userName, post_password)
+
+        val createSchemaQuery = s"CREATE SCHEMA $post_Schema_Name"
+        db_conn.createStatement().execute(createSchemaQuery)
+
+        src_file_data.write
+          .mode(SaveMode.Overwrite)
+          .jdbc(db_url, s"$taleUrl", pgConnectionType)
+      }
+      else return "We are Not able to Load data -> " +
+        "Please Provide Correct DATABASE & SCHEMA"
+
+    } else if (dbExists) {
+      if (!schemaExists) {
+        println("YOUR SCHEMA DOESN'T EXISTS")
+        println("Do You Want to CREATE SCHEMA")
+        println("If YES type -> y else type -> x")
+        val create_Schema = readLine()
+
+        if (create_Schema == "y") {
+          val db_url = s"jdbc:postgresql://localhost:5432/$post_databaseName"
+          val db_conn = DriverManager.getConnection(db_url, post_userName, post_password)
+
+          val createSchemaQuery = s"CREATE SCHEMA $post_Schema_Name"
+          db_conn.createStatement().execute(createSchemaQuery)
+
+          src_file_data.write
+            .mode(SaveMode.Overwrite)
+            .jdbc(db_url, s"$taleUrl", pgConnectionType)
+        } else {
+          return "We are Not able to Load data -> " +
+            "Please Provide Correct SCHEMA"
+        }
+      }
+    }
+
+    return "File SuccessFully Loaded !"
   }
 
 
