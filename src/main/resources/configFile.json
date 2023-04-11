@@ -1,7 +1,6 @@
 [
     {
         "type": "source",
-
         "connectionType": "fileSystem",
         "filePath": "D:\\resources2\\csv_files\\acc_16.csv",
         "fileType": "csv"
@@ -10,7 +9,6 @@
     {
         "type": "target",
         "connectionType": "fileSystem",
-
         "filePath": "D:\\resources\\newout13",
         "fileType": "csv"
 

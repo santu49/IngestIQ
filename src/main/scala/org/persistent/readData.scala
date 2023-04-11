@@ -1,4 +1,5 @@
 package org.persistent
+
 import org.apache.spark.sql.DataFrame
 import org.persistent.mainApp.createSparkSession
 
@@ -38,6 +39,7 @@ class readData {
       .option("user", s"$post_userName")
       .option("password", s"$post_password")
       .option("driver", "org.postgresql.Driver")
+      .option("inferSchema", "true")
       .load()
     //    src_ct_df.show(10);
     return src_ct_df;
@@ -61,7 +63,7 @@ class readData {
 
     val src_ct_df = spark.read
       .format("jdbc")
-      .option("driver","com.mysql.cj.jdbc.Driver")
+      .option("driver", "com.mysql.cj.jdbc.Driver")
       .option("url", s"jdbc:mysql://localhost:3306/$mysql_databaseName")
       .option("dbtable", s"$mysql_table_name")
       .option("user", s"$mysql_userName")

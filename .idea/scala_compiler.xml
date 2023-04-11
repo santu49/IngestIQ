@@ -4,7 +4,7 @@
     <profile name="Maven 1" modules="IngestIQ">
       <parameters>
         <parameter value="-dependencyfile" />
-        <parameter value="C:\Users\shubham_parate\Desktop\GitProject\IngestIQ\target/.scala_dependencies" />
+        <parameter value="D:\IngestIQ\target/.scala_dependencies" />
         <parameter value="-nobootcp" />
       </parameters>
     </profile>
