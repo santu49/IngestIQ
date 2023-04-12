@@ -1,5 +1,6 @@
 package org.persistent
 
+import org.apache.spark.sql.functions.col
 import org.apache.spark.sql.{DataFrame, SaveMode}
 import org.persistent.mainApp.createSparkSession
 
@@ -107,34 +108,46 @@ class loadData {
     import spark.implicits._
     val tar_file_path = df.select("filePath").distinct().map(f => f.getString(0)).collect().toList(0)
     val tar_file_type = df.select("fileType").distinct().map(f => f.getString(0)).collect().toList(0)
-    //      val src_file_data = spark.read.format(tar_file_type).option("header", "true").load(tar_file_path)
-    //  srcFileData.show()
     println("What are you want to change: ")
     println("1. Changes in rows")
     println("2. Changes in column")
+    println("3. Changes in rows and column both")
     val res = readLine
     if (res == "1") {
       println("Enter number of rows you want: ")
       val rows = readLine().toInt;
       val modifiedData = src_file_data.limit(rows)
       modifiedData.coalesce(1).write.format(tar_file_type).option("header", "true").option("inferSchema", "true").save(tar_file_path)
-      //      modifiedData.show()
     } else if (res == "2") {
-//      val columns_count = readLine("Enter the number of columns you want: ").toInt
-//      val col_array = new Array[String](columns_count)
-//      println("Enter columns names: ")
-//      for (i <- 0 until columns_count) {
-//        col_array(i) = readLine
-//      }
-//      println("The array is: " + col_array.mkString(", "))
-
-      val column_names = input("Enter the column names you want to read (separated by commas): ").split(',')
-
+      val columns_count = readLine("Enter the number of columns you want: ").toInt
+      val col_array = new Array[String](columns_count)
+      println("Enter columns names(same as your csv files): ")
+      for (i <- 0 until columns_count) {
+        col_array(i) = readLine
+      }
+      val modifiedData =selectColumns(src_file_data, col_array: _*)
+      modifiedData.coalesce(1).write.format(tar_file_type).option("header", "true").option("inferSchema", "true").save(tar_file_path)
+    }else if(res=="3"){
+      println("Enter number of rows you want: ")
+      val rows = readLine().toInt;
+      val rowModifiedData = src_file_data.limit(rows)
+      val columns_count = readLine("Enter the number of columns you want: ").toInt
+      val col_array = new Array[String](columns_count)
+      println("Enter columns names: ")
+      for (i <- 0 until columns_count) {
+        col_array(i) = readLine
+      }
+      val modifiedData =selectColumns(rowModifiedData, col_array: _*)
+      modifiedData.coalesce(1).write.format(tar_file_type).option("header", "true").option("inferSchema", "true").save(tar_file_path)
 
     }
     return "Successfully loaded Data"
-    //    return "Hello from modified data"
+  }
 
+  def selectColumns(df: DataFrame, columns: String*): DataFrame = {
+    val columnExprs = columns.map(col)
+    val selectedColumns = df.select(columnExprs: _*)
+    return selectedColumns;
   }
 
 }
