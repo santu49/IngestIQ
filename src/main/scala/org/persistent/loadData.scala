@@ -7,7 +7,6 @@ import org.persistent.mainApp.createSparkSession
 import java.sql.DriverManager
 import java.util.Properties
 import scala.io.StdIn.readLine
-import scala.reflect.internal.util.NoFile.input
 
 class loadData {
 
@@ -17,7 +16,6 @@ class loadData {
     import spark.implicits._
     val tar_file_path = df.select("filePath").distinct().map(f => f.getString(0)).collect().toList(0)
     val tar_file_type = df.select("fileType").distinct().map(f => f.getString(0)).collect().toList(0)
-    //    val src_file_data = spark.read.format(src_file_type).option("header", "true").load(src_file_path)
     //    srcFileData.show()
     srcFileData.coalesce(1).write.format(tar_file_type).option("header", "true").save(tar_file_path)
     return "Successfully loaded data"
