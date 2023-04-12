@@ -79,7 +79,6 @@ object mainApp {
         //        srcFileData.show(10);
       }
 
-
       //----------------------- for target---------------------
       if (tarConnectionTypeData(0).toLowerCase == "postgresql") {
         val message = loadDataOBJ.putDataInPostgreSQL(configFileData, srcFileData);
@@ -94,11 +93,6 @@ object mainApp {
         val message = loadDataOBJ.putDataInMYSQL(configFileData, srcFileData);
         println(message);
       }
-
-
     }
-
-
   }
-
 }

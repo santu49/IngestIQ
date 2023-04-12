@@ -89,7 +89,6 @@ class loadData {
     val mysql_databaseName = df.select("dataBaseName").distinct().map(f => f.getString(0)).collect().toList(0)
     val mysql_Schema_Name = df.select("schemaName").distinct().map(f => f.getString(0)).collect().toList(0)
     val mysql_table_name = df.select("tableName").distinct().map(f => f.getString(0)).collect().toList(0)
-
     val mySqlConnectionType = new Properties()
     mySqlConnectionType.setProperty("user", s"$mysql_userName")
     mySqlConnectionType.setProperty("password", s"$mysql_password")
@@ -112,6 +111,7 @@ class loadData {
     println("1. Changes in rows")
     println("2. Changes in column")
     println("3. Changes in rows and column both")
+    println("   Choose one option: ")
     val res = readLine
     if (res == "1") {
       println("Enter number of rows you want: ")
