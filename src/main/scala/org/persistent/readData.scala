@@ -3,6 +3,7 @@ package org.persistent
 import org.apache.spark.sql.DataFrame
 import org.persistent.mainApp.createSparkSession
 
+import java.net.URLEncoder
 import java.util.Properties
 
 class readData {
@@ -66,6 +67,25 @@ class readData {
       .option("password", s"$mysql_password")
       .option("inferSchema", "true")
       .load()
+    return src_ct_df
+  }
+
+  def getDataFromMongoDB(configFileData: DataFrame): DataFrame = {
+    val spark = createSparkSession();
+    val df = configFileData.filter(configFileData("type") === "source").select("userName", "password", "serverDetails", "dataBaseName", "collection")
+    import spark.implicits._
+    val mongoDB_userName = df.select("userName").distinct().map(f => f.getString(0)).collect().toList(0)
+    val mongoDB_password = df.select("password").distinct().map(f => f.getString(0)).collect().toList(0)
+    val mongoDB_serverDetails = df.select("serverDetails").distinct().map(f => f.getString(0)).collect().toList(0)
+    val mongoDB_databaseName = df.select("dataBaseName").distinct().map(f => f.getString(0)).collect().toList(0)
+    val mongoDB_collection = df.select("collection").distinct().map(f => f.getString(0)).collect().toList(0)
+    val encodedPassword = URLEncoder.encode(mongoDB_password, "UTF-8")
+    val src_ct_df = spark.read.format("mongodb")
+      .option("spark.mongodb.input.uri", s"mongodb://+$mongoDB_userName:$encodedPassword@$mongoDB_serverDetails:27017")
+      .option("spark.mongodb.database", s"$mongoDB_databaseName")
+      .option("spark.mongodb.collection", s"$mongoDB_collection")
+      .load()
+//    src_ct_df.show(10)
     return src_ct_df
   }
 

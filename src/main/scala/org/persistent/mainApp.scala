@@ -77,6 +77,9 @@ object mainApp {
       } else if (srcConnectionTypeData(0).toLowerCase == "mysql") {
         srcFileData = readDataOBJ.getDataFromMYSQL(configFileData);
         //        srcFileData.show(10);
+      }else if (srcConnectionTypeData(0).toLowerCase == "mongodb") {
+        srcFileData = readDataOBJ.getDataFromMongoDB(configFileData);
+//                srcFileData.show(10);
       }
 
       //----------------------- for target---------------------
