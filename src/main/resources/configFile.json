@@ -6,13 +6,13 @@
         "password": "MongoDB@123456",
         "serverDetails": "localhost",
         "dataBaseName": "Test",
-        "collection": "newcol6"
+        "collection": "newcol8"
 
     },
     {
         "type": "source",
         "connectionType": "fileSystem",
-        "filePath": "D:\\resources2\\csv_file\\pers_19.csv",
+        "filePath": "D:\\resources2\\csv_files\\pers_19.csv",
         "fileType": "csv"
 
     }

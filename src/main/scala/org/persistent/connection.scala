@@ -16,7 +16,7 @@ class connection {
       }
       else {
         // File does not exist or is not a regular file
-        throw new Exception("File does not exist")
+        throw new Exception("Json File does not exist")
       }
     } catch {
       case e: Exception => {
