@@ -52,14 +52,14 @@ object mainApp {
         //        print(tarConnectionFileType)
         if (srcConnectionFileType(0).toLowerCase == "csv" && tarConnectionFileType(0).toLowerCase == "csv") {
           srcFileData = readDataOBJ.getDataFromFile(configFileData)
-//          srcFileData.show(10)
+          //          srcFileData.show(10)
           println("Do you want to load same data? (yes/no)")
           val res = readLine
           if (res.toLowerCase == "no") {
-//            srcFileData.show(10)
+            //            srcFileData.show(10)
             val message = loadDataOBJ.modifiedData(configFileData, srcFileData)
             println(message)
-//            print("getting res")
+            //            print("getting res")
             sys.exit
           }
 
@@ -77,9 +77,9 @@ object mainApp {
       } else if (srcConnectionTypeData(0).toLowerCase == "mysql") {
         srcFileData = readDataOBJ.getDataFromMYSQL(configFileData);
         //        srcFileData.show(10);
-      }else if (srcConnectionTypeData(0).toLowerCase == "mongodb") {
+      } else if (srcConnectionTypeData(0).toLowerCase == "mongodb") {
         srcFileData = readDataOBJ.getDataFromMongoDB(configFileData);
-//                srcFileData.show(10);
+        //                srcFileData.show(10);
       }
 
       //----------------------- for target---------------------
@@ -95,6 +95,10 @@ object mainApp {
       } else if (tarConnectionTypeData(0).toLowerCase == "mysql") {
         val message = loadDataOBJ.putDataInMYSQL(configFileData, srcFileData);
         println(message);
+      } else if (tarConnectionTypeData(0).toLowerCase == "mongodb") {
+        val message = loadDataOBJ.putDataInMongoDB(configFileData, srcFileData);
+        println(message);
+
       }
     }
   }

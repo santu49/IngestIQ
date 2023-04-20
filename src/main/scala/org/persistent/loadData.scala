@@ -4,6 +4,7 @@ import org.apache.spark.sql.functions.col
 import org.apache.spark.sql.{DataFrame, SaveMode}
 import org.persistent.mainApp.createSparkSession
 
+import java.net.URLEncoder
 import java.sql.DriverManager
 import java.util.Properties
 import scala.io.StdIn.readLine
@@ -147,5 +148,27 @@ class loadData {
     val selectedColumns = df.select(columnExprs: _*)
     return selectedColumns;
   }
+
+  def putDataInMongoDB(configFileData: DataFrame, src_file_data: DataFrame): String ={
+    val spark = createSparkSession();
+    val df = configFileData.filter(configFileData("type") === "target").select("userName", "password", "serverDetails", "dataBaseName", "collection")
+    import spark.implicits._
+    val mongoDB_userName = df.select("userName").distinct().map(f => f.getString(0)).collect().toList(0)
+    val mongoDB_password = df.select("password").distinct().map(f => f.getString(0)).collect().toList(0)
+    val mongoDB_serverDetails = df.select("serverDetails").distinct().map(f => f.getString(0)).collect().toList(0)
+    val mongoDB_databaseName = df.select("dataBaseName").distinct().map(f => f.getString(0)).collect().toList(0)
+    val mongoDB_collection = df.select("collection").distinct().map(f => f.getString(0)).collect().toList(0)
+    val encodedPassword = URLEncoder.encode(mongoDB_password, "UTF-8")
+    src_file_data.write.format("mongodb")
+      .option("spark.mongodb.input.uri", s"mongodb://+$mongoDB_userName:$encodedPassword@$mongoDB_serverDetails:27017")
+      .option("spark.mongodb.database", s"$mongoDB_databaseName")
+      .option("spark.mongodb.collection", s"$mongoDB_collection")
+      .mode("append")
+      .save()
+
+    return "Successfully loaded Data"
+
+  }
+
 
 }

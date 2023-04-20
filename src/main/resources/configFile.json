@@ -1,18 +1,18 @@
 [
     {
-        "type": "source",
+        "type": "target",
         "connectionType": "mongodb",
         "userName": "santuroy",
         "password": "MongoDB@123456",
         "serverDetails": "localhost",
         "dataBaseName": "Test",
-        "collection": "newcol3"
+        "collection": "newcol6"
 
     },
     {
-        "type": "target",
+        "type": "source",
         "connectionType": "fileSystem",
-        "filePath": "D:\\resources\\newout",
+        "filePath": "D:\\resources2\\csv_files\\pers_19.csv",
         "fileType": "csv"
 
     }
