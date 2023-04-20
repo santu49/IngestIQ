@@ -48,8 +48,9 @@ class connection {
       else {
         throw new Exception("Error: Invalid file path or file type")
       }
-
-
+    }
+    else {
+      src_ct_df = configFileData.filter(configFileData("type") === "source").select("connectionType")
     }
     return src_ct_df
   }
