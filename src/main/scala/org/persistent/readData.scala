@@ -85,7 +85,6 @@ class readData {
       .option("spark.mongodb.database", s"$mongoDB_databaseName")
       .option("spark.mongodb.collection", s"$mongoDB_collection")
       .load()
-//    src_ct_df.show(10)
     return src_ct_df
   }
 
