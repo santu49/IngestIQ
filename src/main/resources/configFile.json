@@ -12,7 +12,7 @@
     {
         "type": "source",
         "connectionType": "fileSystem",
-        "filePath": "D:\\resources2\\csv_files\\pers_19.csv",
+        "filePath": "D:\\resources2\\csv_file\\pers_19.csv",
         "fileType": "csv"
 
     }
