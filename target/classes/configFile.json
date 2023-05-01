@@ -1,19 +1,17 @@
 [
-    {
-        "type": "target",
-        "connectionType": "mongodb",
-        "userName": "santuroy",
-        "password": "MongoDB@123456",
-        "serverDetails": "localhost",
-        "dataBaseName": "Test",
-        "collection": "newcol8"
-
-    },
-    {
-        "type": "source",
-        "connectionType": "fileSystem",
-        "filePath": "D:\\resources2\\csv_files\\pers_19.csv",
-        "fileType": "csv"
-
-    }
+  {
+    "type": "source",
+    "connectionType": "postgresql",
+    "userName": "postgres",
+    "password": "Postgres",
+    "dataBaseName": "demo",
+    "schemaName": "mySchema2",
+    "tableName": "newToday"
+  },
+  {
+    "type": "target",
+    "connectionType": "fileSystem",
+    "filePath": "D:\\resources\\newout",
+    "fileType": "csv"
+  }
 ]
