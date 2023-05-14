@@ -1,0 +1,157 @@
+	[
+		{
+			"type": "source",
+			"connectionType": "postgresql",
+			"userName": "postgres",
+			"password": "",
+			"dataBaseName": "demo",
+			"schemaName": "mySchema2",
+			"tableName": "newToday"
+
+		},
+		{
+			"type": "target",
+			"connectionType": "fileSystem",
+			"filePath": "D:\\resources\\newout",
+			"fileType": "csv"
+
+		}
+	]
+	
+	
+	
+	[
+	    {
+		
+        "type": "source",
+        "connectionType": "fileSystem",
+        "filePath": "D:\\resources2\\yellow_tripdata_2022-11.parquet",
+        "fileType": "parquet"
+
+		},
+		{
+        "type": "target",
+        "connectionType": "postgresql",
+        "userName": "postgres",
+        "password": "",
+        "dataBaseName": "demo",
+        "schemaName": "mySchema2",
+        "tableName": "newToday"
+
+		}
+	]
+
+
+
+
+
+	
+[
+
+    {
+        "type": "target",
+        "connectionType": "AwsPostgreSQL",
+        "userName": "postgres",
+        "password": "",
+        "dataBaseName": "demo6",
+        "schemaName": "data",
+        "tableName": "emp"
+    }
+]
+
+---------------------------Parquet -> CSV----------------------------
+[
+  {
+
+    "type": "source",
+    "connectionType": "fileSystem",
+    "filePath": "D:\\IngestIQ-resources\\yellow_tripdata_2022-11.parquet",
+    "fileType": "parquet"
+
+  },
+  {
+    "type": "target",
+    "connectionType": "fileSystem",
+    "filePath": "D:\\IngestIQ-Output\\newout1",
+    "fileType": "csv"
+
+  }
+
+]
+
+-------------------CSV -> MongoDB-------------------------
+[
+    {
+        "type": "target",
+        "connectionType": "mongodb",
+        "userName": "santuroy",
+        "password": "",
+        "serverDetails": "localhost",
+        "dataBaseName": "Test",
+        "collection": "newcol6"
+
+    },
+    {
+        "type": "source",
+        "connectionType": "fileSystem",
+        "filePath": "D:\\IngestIQ-resources\\csv_files\\pers_19.csv",
+        "fileType": "csv"
+
+    }
+]
+-------------------MongoDB -> CSV------------------------
+[
+    {
+        "type": "source",
+        "connectionType": "mongodb",
+        "userName": "santuroy",
+        "password": "",
+        "serverDetails": "localhost",
+        "dataBaseName": "Test",
+        "collection": "newcol3"
+
+    },
+    {
+        "type": "target",
+        "connectionType": "fileSystem",
+        "filePath": "D:\\resources\\newout",
+        "fileType": "csv"
+
+    }
+]
+------------------CSV -> CSV------------------------
+[
+    {
+        "type": "source",
+        "connectionType": "fileSystem",
+        "filePath": "D:\\IngestIQ-resources\\csv_files\\acc_16.csv",
+        "fileType": "csv"
+
+    },
+	{
+        "type": "target",
+        "connectionType": "fileSystem",
+        "filePath": "D:\\resources\\newout14",
+        "fileType": "csv"
+
+    }
+]
+--------------------------MySQL -> CSV------------------------
+[
+	{
+        "type": "source",
+        "connectionType": "mysql",
+        "userName": "root",
+        "password": "",
+        "dataBaseName": "sakila",
+        "schemaName": "sakila",
+        "tableName": "student"
+    },
+    {
+        "type": "target",
+        "connectionType": "fileSystem",
+        "filePath": "D:/Book7",
+        "fileType": "csv"
+
+    }
+]

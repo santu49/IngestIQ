@@ -1,17 +1,17 @@
 [
   {
     "type": "source",
-    "connectionType": "postgresql",
-    "userName": "postgres",
-    "password": "Postgres",
-    "dataBaseName": "demo",
-    "schemaName": "mySchema2",
-    "tableName": "newToday"
+    "connectionType": "fileSystem",
+    "filePath": "D:\\IngestIQ-resources\\csv_files\\pers_19.csv",
+    "fileType": "csv"
+
   },
   {
     "type": "target",
     "connectionType": "fileSystem",
-    "filePath": "D:\\resources\\newout",
+    "filePath": "D:\\IngestIQ-Output\\newout2",
     "fileType": "csv"
+
   }
+
 ]
