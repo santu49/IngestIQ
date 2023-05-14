@@ -1,3 +1,4 @@
+-------------------PostgreSQL - > CSV-------------------
 	[
 		{
 			"type": "source",
@@ -17,9 +18,8 @@
 
 		}
 	]
-	
-	
-	
+
+------------------ CSV -> PostgreSQL---------------------
 	[
 	    {
 		
@@ -41,12 +41,16 @@
 		}
 	]
 
-
-
-
-
-	
+------------------parquet -> RDSPostgreSQL-------------------
 [
+        {
+
+        "type": "source",
+        "connectionType": "fileSystem",
+        "filePath": "D:\\resources2\\yellow_tripdata_2022-11.parquet",
+        "fileType": "parquet"
+
+		},
 
     {
         "type": "target",
